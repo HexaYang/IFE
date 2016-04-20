@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>task-13@IFE</title>
+	<link rel="stylesheet" type="text/css" href="../bootstrap/bootstrap.min.css">
+</head>
+<body>
+	<div class="container" style="padding-top: 10%;">
+		<div class="row">
+			<div class="panel panel-primary  col-sm-offset-3 col-sm-6 col-xs-10 col-xs-offset-1" style="padding: 0 0;min-width: 390px">
+				<div class="panel-heading">
+					<p>天气</p>
+				</div>
+				<div class="panel-body" >
+					<!-- form表单Enter后会提交 刷新页面 onkeyup无效 -->
+					<div action="" class="form-horizontal">
+						<div class="form-group">
+							<label for="" class="col-xs-5 control-label">请输入空气质量：</label>
+							<div class="col-xs-4">
+								<input class="form-control" for='kkkk' id="userinput"></input>
+								<input type="button"  for='kkkk' class="form-control  btn btn-primary" style="margin-top: 10px;" value="确认填写" id="submitdata">
+							</div>
+						</div>
+						<div class="from-group">
+							<label for="" class="col-xs-5 control-label">您输入的值是：</label>
+							<div class="control-label " style="text-align: left;"><span id="aqi-display">尚无录入！</span></div>
+						</div>
+					</div>
+					<!-- form表单Enter后会提交 刷新页面 onkeyup无效 -->
+				</div>
+				<div class="panel-footer">
+					<p>HexaY</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+	//self
+/*		document.getElementById('submitdata').onclick = function (){
+			document.getElementById('aqi-display').innerHTML = document.getElementById('userinput').value.trim();
+
+		}*/
+	//eg:1
+/*		(function(){
+			var node_in = document.getElementById('userinput');
+			var node_btn = document.getElementById('submitdata');
+			var node_display = document.getElementById('aqi-display');
+			if(node_btn.attachEvent){
+				node_btn.attachEvent("onclick",changeValue);
+			}else{
+				node_btn.addEventListener("click",changeValue,false);
+			}
+			function changeValue(){
+				var val = node_in.value.trim();
+				if (val.length>0) {
+					if (node_display.textContent!=null) {
+						node_display.textContent = val;
+					}else{
+						node_display.innerHTML = val.replace(/[<>]/ig,"");//avoid XSS
+					}
+				}else{
+					alert("Please complete the form!")
+				}
+			}
+		})()*/
+		//eg:2
+		(function(){
+			var $ = function(id){
+				return document.getElementById(id);
+			}
+			var handler =function(){
+				var num = parseInt($('userinput').value);
+				if ((!isNaN(num))&&(num>0)&&(num<1000)) {
+					$('aqi-display').innerHTML = num;
+				}else{
+					alert($('userinput').value+" 不是一个有效的AQI数值！");
+				}
+			}
+			$('submitdata').onclick = function(){
+				handler();
+			}
+			$('userinput').onkeyup = function(event){
+				if (event.keyCode === 13) {
+					console.log(1)
+					handler();
+					console.log(2)
+				}
+			}
+		})()
+		
+	</script>
+<!-- 	<script type="text/javascript" src="../jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="../bootstrap/bootstrap.min.js"></script> -->
+</body>
+</html>
