@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>task-18@IFE</title>
+	<link rel="stylesheet" type="text/css" href="../bootstrap/bootstrap.min.css">
+</head>
+<body>
+	<!-- 获取 添加 删除 修改 HTML  使用HTML DOM -->
+	<div class="container" style="padding-top: 5%;">
+		<div class="row">
+			<div class="panel panel-primary col-lg-offset-2 col-md-offset-1 col-lg-8 col-md-10 col-sm-12" style="padding-left: 0px;padding-right: 0px;">
+				<div class="panel-heading">
+					<h3>任务说明</h3>
+				</div>
+				<div class="panel-body">
+					模拟一个队列，队列的每个元素是一个数字，初始队列为空；<br/>
+					有一个input输入框，以及4个操作按钮；<br/>
+					点击"左侧入"，将input中输入的数字从左侧插入队列中；<br/>
+					点击"右侧入"，将input中输入的数字从右侧插入队列中；<br/>
+					点击"左侧出"，读取并删除队列左侧第一个元素，并弹窗显示元素中数值；<br/>
+					点击"右侧出"，读取并删除队列又侧第一个元素，并弹窗显示元素中数值；<br/>
+					点击队列中任何一个元素，则该元素会被从队列中删除。<br/>
+				</div>
+				<div class="panel-footer" id="panel-footer">
+							<div class="row" style="margin-bottom: 10px;">
+								<div class="col-xs-offset-3 col-xs-1">
+									<button class="btn btn-primary" id="leftin">左侧入</button>
+								</div>
+								<div class="col-xs-1"> </div>
+								<div class="col-xs-2">
+									<input class="form-control" id="user-input"></input>
+								</div>
+								<div class="col-xs-1"> </div>
+								<div class="col-xs-1">
+									<button class="btn btn-primary" id="rightin">右侧入</button>
+								</div>
+							</div>
+							<div class="row" id="num-contain">
+								<!-- 列队here -->
+					<!-- 			<div class="btn btn-warning" disabled >45</div>
+									<div class="btn btn-warning" disabled >16</div>
+									<div class="btn btn-warning" disabled >31</div> -->
+							</div>
+							<div class="row" style="margin-top: 10px;">
+								<div class="col-xs-offset-3 col-xs-1">
+									<button class="btn btn-primary" id="leftout">左侧出</button>
+								</div>
+								<div class="col-xs-1"> </div>
+								<div class="col-xs-2">
+								</div>
+								<div class="col-xs-1"> </div>
+								<div class="col-xs-1">
+									<button class="btn btn-primary" id="rightout">右侧出</button>
+								</div>
+							</div>
+				</div>
+			</div>
+
+		</div>
+		
+	</div>
+	<script type="text/javascript">
+		(function(){
+			function isNum(){
+				var val = $('user-input').value.replace(/(^\s*)|(\s*$)/g, "");
+				if(val==""){
+					alert("please input a number")
+					return false;
+
+				}else if (!isNaN(val)) {
+					return val;
+				}else{
+					alert(val+" is not a number")
+					$('user-input').value = "";
+					return false;
+				}
+			}
+			function $(id){
+				return document.getElementById(id);
+			}
+			function createDiv(){
+				var element = document.createElement("div");
+				var text = document.createTextNode(isNum());
+				element.appendChild(text);
+				element.className = "btn btn-warning";
+				element.onclick = function(){
+					$('num-contain').removeChild(this);
+				}
+				// element.setAttribute("disabled",true);
+				// console.log(element);
+				return element;
+			}
+			function leftIn(){
+				$('num-contain').insertBefore(createDiv(),$('num-contain').getElementsByTagName('div')[0])
+			}
+			function rightIn(){
+				$('num-contain').appendChild(createDiv());
+			}
+			function leftOut(){
+				var num = $('num-contain').getElementsByTagName('div')[0].innerHTML;
+				$('num-contain').removeChild($('num-contain').getElementsByTagName('div')[0]);
+				alert(num);
+			}
+			function rightOut(){
+				
+				var lastdiv = $('num-contain').getElementsByTagName('div').length-1;
+				var num = $('num-contain').getElementsByTagName('div')[lastdiv].innerHTML;
+				$('num-contain').removeChild($('num-contain').getElementsByTagName('div')[lastdiv]);
+				alert(num);
+			}
+			function init(){
+					$('leftin').onclick = function(){ 
+						if (isNum()) {
+							leftIn(); 
+							$('user-input').value = "";
+						} 
+					};
+					$('rightin').onclick = function(){ 
+						if (isNum()) {
+							rightIn()
+							$('user-input').value = "";
+						} 
+					};
+					$('leftout').onclick = function(){ 
+							leftOut()
+							$('user-input').value = "";
+					};
+					$('rightout').onclick = function(){ 
+							rightOut()
+							$('user-input').value = "";
+					};		
+			}
+			init();
+			// console.log($('panel-footer').innerHTML);
+		})()
+		//去掉左右两端的空格 string.replace(/(^\s*)|(\s*$)/g, "")
+	</script>
+	<script type="text/javascript">
+		/*  一些DOM对象的方法：
+			node.getElementById();
+			node.getElementsByTagName();
+			node.getElementsByClassName();
+			parentNode.appendChild()
+			removeChild();
+			replaceChild()
+			insertBefore();
+			createAttribute()
+			createElement()
+			createTextNode()
+			getAttribute()
+			setAttribute()
+			innerHTML
+			getElementsByClassName() 在 Internet Explorer 5,6,7,8 中无效。
+		*/
+		/*创建一个新元素
+		var element = document.createElement("div")
+		parentNode.appendChild(child)
+		parentNode.insertBefore(child,beforeThisNode)
+		属性：parentNode childNodes[i] siblingNodes[i] 
+						firstChild lastChild 
+						nextSibling preiviousSibling
+		nodeValue  innerHTML 获得节点内容
+
+		*/
+	</script>
+</body>
+</html>
